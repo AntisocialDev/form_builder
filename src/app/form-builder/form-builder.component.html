@@ -1,0 +1,64 @@
+<main>
+    <div class="h-100 d-flex flex-column align-items-center gap-5 justify-content-between">
+        <h1>Form Builder</h1>
+        <div>
+            <ng-container *ngIf="formConfig!.length>0; else emptyForm">
+                <div class="bg-success rounded p-2 mt-3 text-light" *ngFor="let item of formConfig">
+                    <p>Label: {{item.label}}</p>
+                    <p>Type: {{item.type}}</p>
+                    <p>Options: {{item.options!.length>0?'true' : 'No options'}} </p>
+                </div>
+            </ng-container>
+        </div>
+
+
+        <div class="d-flex gap-2">
+            <button type="submit" (click)="clearFormConfig()" class="btn btn-danger">Clear form</button>
+            <button type="submit" (click)="showModal(modal)" class="btn btn-primary">Add a form input</button>
+            <button [routerLink]="['../user-form']" [disabled]="!formConfig!.length" type="submit" class="btn btn-success">Render Form</button>
+        </div>
+    </div>
+</main>
+
+
+<ng-template #emptyForm>
+    <p class="fs-2">Form Items is empty</p>
+</ng-template>
+
+<ng-template #modal>
+    <div class="modal-container">
+        <div class="modal-body">
+            <form [formGroup]="createInputFormGroup" class="d-flex flex-column align-items-center">
+                <div class="form-div">
+                    <label>Form label shown</label>
+                    <input type="text" placeholder="Enter Label" formControlName="label">
+                </div>
+                <div class="form-div">
+                    <label>Select input type</label>
+                    <select (change)="onSelectChange($event)" formControlName="type">
+                    <option value=""></option>
+                    <option value="text" selected>Text</option>
+                    <option value="checkbox">Checkbox</option>
+                    <option value="radio">Radio</option>
+                     </select>
+                </div>
+
+                <ng-container *ngIf="selectedOpt == 'checkbox' || selectedOpt == 'radio'">
+                    <div class="form-div">
+                        <label>Input Options</label>
+                        <input type="text" placeholder="Press enter to create input" (keydown)="onEnterKey($event)">
+                    </div>
+                    <div *ngFor="let option of inputOptions; let index = index">
+                        <p>{{option}}</p>
+                    </div>
+                </ng-container>
+
+
+                <div class="d-flex gap-2 py-3">
+                    <button class="btn btn-danger" (click)="dismissModal()">Cancel</button>
+                    <button class="btn btn-success" (click)="createInput()" [disabled]="!createInputFormGroup.valid">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,30 @@
+<main>
+    <div class="">
+        <div class="form-div">
+
+            <form class="d-flex flex-column gap-4" [formGroup]="userInputFormGroup">
+                <div *ngFor="let data of userFormData">
+                    <ng-container *ngIf="data.options!.length<1 ;else hasOption">
+                        <div class="form-div">
+                            <label>{{data.label}}</label>
+                            <input [type]="data.type" formControlName="{{data.label.replace(' ','').toLowerCase()}}">
+                        </div>
+                    </ng-container>
+
+
+                    <ng-template #hasOption>
+                        <label>{{data.label}}</label>
+                        <div class="d-flex gap-5">
+                            <div class="d-flex align-items-center gap-2" *ngFor="let item of data.options; let i = index">
+                                <label>{{item.option}}</label>
+                                <input [name]="data.label.replace(' ','_').toLowerCase()" [type]="data.type" [value]="item.option.toString()" (change)="onOptChange($event,data.label.replace(' ','').toLowerCase(),data.type)" formArrayName="{{data.label.replace(' ','').toLowerCase()}}">
+                            </div>
+                        </div>
+
+                    </ng-template>
+                </div>
+                <button [routerLink]="['../user-input']" class="btn btn-primary mt-3" (click)="onSubmit()" [disabled]="!userInputFormGroup.valid">Submit</button>
+            </form>
+        </div>
+    </div>
+</main>

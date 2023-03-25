@@ -1,0 +1,16 @@
+<main>
+    <div>
+        <table class="table table-dark table-striped-columns">
+            <thead>
+                <tr>
+                    <th *ngFor="let header of tableHeaders">{{header}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td *ngFor="let data of tableBody">{{data}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
