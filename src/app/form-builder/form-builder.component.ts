@@ -27,9 +27,9 @@ export class FormBuilderComponent implements OnInit, OnDestroy{
   inputOptions?: string[] = [];
   createInputFormGroup!: FormGroup;
 
-  private storageSub = new Subject<string>();
+   storageSub = new Subject<string>();
 
-  public storageSubObs: Observable<any>
+   storageSubObs: Observable<any>
 
   constructor(
     private modalService: ModalService,
